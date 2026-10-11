@@ -79,7 +79,7 @@ func main() {
     }
 
     for _, row := range resp.Rows {
-        fmt.Printf("%s, %s\n", row.DimensionValues[0].Value, row.MetricValues[0].Value)
+        fmt.Printf("%s, %s\n", row.DimensionValues[0].GetValue(), row.MetricValues[0].GetValue())
     }
 }
 ```
