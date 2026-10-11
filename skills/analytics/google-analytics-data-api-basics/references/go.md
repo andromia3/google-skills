@@ -5,7 +5,7 @@ Google Analytics Data API (v1beta) client library for Go.
 
 ## Prerequisites
 
-*   **Go:** Version 1.19 or higher.
+*   **Go:** Use a supported toolchain compatible with the selected genproto, OAuth2 and gRPC module versions; inspect their `go.mod` requirements before installation.
 *   **Modules:** Go modules enabled.
 *   **Authentication:** Application Default Credentials (ADC) configured via
     `gcloud auth application-default login`.
@@ -17,14 +17,16 @@ Install the official Go client library using `go get`.
 Run the following command in your module directory:
 
 ```bash
-go get cloud.google.com/go/analytics/data/apiv1beta
+go get google.golang.org/genproto/googleapis/analytics/data/v1beta golang.org/x/oauth2/google google.golang.org/grpc
 ```
 
 If `go` is not available, prompt the user to install `Go` before installing the
 package.
 
-*Why: This command adds the Google Analytics Data API package and its gRPC
-transport layers to your Go project.*
+*Why: The official Data API Go reference points to the generated genproto
+client. It takes a gRPC connection, rather than a context or an automatically
+authenticated high-level client. The example below configures TLS and ADC
+explicitly. Pin module versions compatible with your project's toolchain.*
 
 ## Quickstart / Usage
 
@@ -35,20 +37,32 @@ import (
     "context"
     "fmt"
     "log"
+    "time"
 
-    data "cloud.google.com/go/analytics/data/apiv1beta"
-    "cloud.google.com/go/analytics/data/apiv1beta/datapb"
+    "golang.org/x/oauth2/google"
+    datapb "google.golang.org/genproto/googleapis/analytics/data/v1beta"
+    "google.golang.org/grpc"
+    "google.golang.org/grpc/credentials"
+    "google.golang.org/grpc/credentials/oauth"
 )
 
 func main() {
     ctx := context.Background()
 
-    // Initialize client. Uses ADC from environment.
-    client, err := data.NewBetaAnalyticsDataClient(ctx)
+    // ADC must have the analytics.readonly scope and access to the property.
+    creds, err := google.FindDefaultCredentials(ctx, "https://www.googleapis.com/auth/analytics.readonly")
     if err != nil {
-        log.Fatalf("Failed to create client: %v", err)
+        log.Fatalf("Failed to load ADC: %v", err)
     }
-    defer client.Close()
+    conn, err := grpc.NewClient("analyticsdata.googleapis.com:443",
+        grpc.WithTransportCredentials(credentials.NewTLS(nil)),
+        grpc.WithPerRPCCredentials(oauth.TokenSource{TokenSource: creds.TokenSource}),
+    )
+    if err != nil {
+        log.Fatalf("Failed to create connection: %v", err)
+    }
+    defer conn.Close()
+    client := datapb.NewBetaAnalyticsDataClient(conn)
 
     req := &datapb.RunReportRequest{
         Property:   "properties/1234567",
@@ -57,7 +71,9 @@ func main() {
         DateRanges: []*datapb.DateRange{{StartDate: "2026-05-01", EndDate: "today"}},
     }
 
-    resp, err := client.RunReport(ctx, req)
+    requestCtx, cancel := context.WithTimeout(ctx, 30*time.Second)
+    defer cancel()
+    resp, err := client.RunReport(requestCtx, req)
     if err != nil {
         log.Fatalf("RunReport failed: %v", err)
     }
@@ -67,3 +83,7 @@ func main() {
     }
 }
 ```
+
+Modified October 11, 2026: replaced nonexistent Cloud Analytics Data package
+paths with the generated client and explicit TLS/ADC connection setup. This
+lower-level example does not add high-level SDK retry or pagination behavior.

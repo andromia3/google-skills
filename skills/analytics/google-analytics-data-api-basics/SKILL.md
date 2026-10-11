@@ -102,7 +102,7 @@ If you need to install or set up the Google Analytics Data API client library
 for Go, read the setup guide:
 
 *   [Go Installation Reference](references/go.md) *(Package:
-    `cloud.google.com/go/analytics/data/apiv1beta`)*
+    `google.golang.org/genproto/googleapis/analytics/data/v1beta`; requires explicit authenticated gRPC connection setup)*
 
 #### .NET
 
@@ -258,3 +258,5 @@ def sample_check_compatibility(property_id: str):
 if __name__ == "__main__":
     sample_check_compatibility("YOUR-PROPERTY-ID")
 ```
+
+Modified October 11, 2026: corrected the Go package reference and documented explicit authenticated connection setup.
