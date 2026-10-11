@@ -5,7 +5,7 @@ Google Analytics Admin API client library for PHP.
 
 ## Prerequisites
 
-*   **PHP:** Version 8.0 or higher.
+*   **PHP:** PHP 8.2 or higher for the current package (checked October 11, 2026); verify the selected release's Composer requirements before installing.
 *   **Package Manager:** Composer.
 *   **Authentication:** Application Default Credentials (ADC) configured via
     `gcloud auth application-default login`.
@@ -49,3 +49,5 @@ foreach ($accountSummaries as $summary) {
     printf("Account: %s (%s)\n", $summary->getDisplayName(), $summary->getName());
 }
 ```
+
+Modified October 11, 2026: corrected runtime prerequisites against released package metadata.

@@ -5,7 +5,7 @@ Google Analytics Admin API client library for Go.
 
 ## Prerequisites
 
-*   **Go:** Version 1.19 or higher.
+*   **Go:** Use a toolchain compatible with the selected `cloud.google.com/go/analytics` module. Release v0.37.0 declares Go 1.26.0 (checked October 11, 2026); verify the selected module's `go.mod` before installing.
 *   **Modules:** Go modules enabled.
 *   **Authentication:** Application Default Credentials (ADC) configured via
     `gcloud auth application-default login`.
@@ -17,7 +17,7 @@ Install the official Go client library using `go get`.
 Run the following command in your module directory:
 
 ```bash
-go get cloud.google.com/go/analytics/admin/apiv1beta
+go get cloud.google.com/go/analytics/admin/apiv1alpha
 ```
 
 If `go` is not available, prompt the user to install `Go` before installing the
@@ -36,8 +36,8 @@ import (
     "fmt"
     "log"
 
-    admin "cloud.google.com/go/analytics/admin/apiv1beta"
-    "cloud.google.com/go/analytics/admin/apiv1beta/adminpb"
+    admin "cloud.google.com/go/analytics/admin/apiv1alpha"
+    "cloud.google.com/go/analytics/admin/apiv1alpha/adminpb"
     "google.golang.org/api/iterator"
 )
 
@@ -65,3 +65,7 @@ func main() {
     }
 }
 ```
+
+Modified October 11, 2026: corrected runtime prerequisites against the released module's go.mod.
+
+Modified October 11, 2026: corrected the Go package path to the available generated `apiv1alpha` client. This is an alpha API client; do not imply that the Go package provides a beta surface. Verify method availability for the selected version.

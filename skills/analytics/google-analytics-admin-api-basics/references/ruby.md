@@ -5,7 +5,7 @@ Google Analytics Admin API client library for Ruby.
 
 ## Prerequisites
 
-*   **Ruby:** Version 3.0 or higher.
+*   **Ruby:** Ruby 3.2 or higher for the current gem (checked October 11, 2026); verify the selected release's required Ruby version before installing.
 *   **Package Manager:** RubyGems / Bundler.
 *   **Authentication:** Application Default Credentials (ADC) configured via
     `gcloud auth application-default login`.
@@ -48,3 +48,5 @@ account_summaries.each do |summary|
   puts "Account: #{summary.display_name} (#{summary.name})"
 end
 ```
+
+Modified October 11, 2026: corrected runtime prerequisites against released package metadata.

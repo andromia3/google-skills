@@ -5,7 +5,7 @@ Google Analytics Data API (v1beta) client library for PHP.
 
 ## Prerequisites
 
-*   **PHP:** Version 8.0 or higher.
+*   **PHP:** PHP 8.2 or higher for the current package (checked October 11, 2026); verify the selected release's Composer requirements before installing.
 *   **Package Manager:** Composer.
 *   **Authentication:** Application Default Credentials (ADC) configured via
     `gcloud auth application-default login`.
@@ -54,3 +54,5 @@ foreach ($response->getRows() as $row) {
     printf("%s, %s\n", $row->getDimensionValues()[0]->getValue(), $row->getMetricValues()[0]->getValue());
 }
 ```
+
+Modified October 11, 2026: corrected runtime prerequisites against released package metadata.

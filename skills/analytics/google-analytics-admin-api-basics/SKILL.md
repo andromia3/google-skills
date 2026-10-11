@@ -150,7 +150,7 @@ If you need to install or set up the Google Analytics Admin API client library
 for Go, read the setup guide:
 
 *   [Go Installation Reference](references/go.md) *(Package:
-    `cloud.google.com/go/analytics/admin/apiv1beta`)*
+    `cloud.google.com/go/analytics/admin/apiv1alpha`; this generated Go client uses the alpha API surface)*
 
 #### .NET
 
@@ -212,3 +212,5 @@ for Ruby, read the setup guide:
     if __name__ == "__main__":
         sample_list_account_summaries()
     ```
+
+Modified October 11, 2026: corrected the Go client package to the available alpha API surface.
