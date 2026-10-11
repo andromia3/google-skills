@@ -5,7 +5,7 @@ Google Analytics Admin API client library for Node.js.
 
 ## Prerequisites
 
-*   **Node.js:** v14.x or higher (v16+ recommended).
+*   **Node.js:** Use a supported Node.js release compatible with the selected package version. The current package requires Node.js 22 or higher (checked October 11, 2026).
 *   **Package Manager:** `npm` or `yarn`.
 *   **Authentication:** Application Default Credentials (ADC) configured via
     `gcloud auth application-default login`.
@@ -48,3 +48,7 @@ async function listAccounts() {
 
 listAccounts().catch(console.error);
 ```
+
+## Runtime verification
+
+Modified October 11, 2026: corrected outdated runtime guidance. Before installing a different package version, check its engine requirement with `npm view @google-analytics/admin@<version> engines --json`. Do not assume older Node.js releases support the latest SDK.
